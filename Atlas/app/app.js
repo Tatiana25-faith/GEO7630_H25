@@ -9,7 +9,7 @@ var map = new maplibregl.Map({
 map.on('load', function () {
     map.addSource('qt_arbres_quartier_source', {
         type: 'vector',
-        tiles: ['https://special-train-gv4r9g5gj4cvp7-8801.app.github.dev/public.densite_arbres_quartiers/{z}/{x}/{y}.pbf']
+        tiles: ['https://obscure-carnival-jj7qx674px473v7r-8801.app.github.dev/public.densite_arbres_quartiers/{z}/{x}/{y}.pbf']
     });
     map.addLayer({
         'id': 'qt_arbres_quartier',
@@ -28,7 +28,7 @@ map.on('load', function () {
                 5000, 'rgba(68, 0, 255, 0.66)',
                 7000, 'rgba(19, 0, 70, 0.66)'
             ],
-            'fill-opacity': 0.7
+            'fill-opacity': 1
         }
     });
 });
@@ -60,7 +60,7 @@ function loadWFS() {
     // Ajout de la source de données des arrondissements depuis pgFeatureServ
     map.addSource('arrondissements-source', {
         type: 'geojson', // Type de source de données
-        data: 'https://special-train-gv4r9g5gj4cvp7-9000.app.github.dev/collections/public.arrondissements/items?limit=5000' // URL pgFeatureServ GeoJSON ! Attention il faut bien inclure la méthode qui fait la requete sans limite d'items de données
+        data: 'https://obscure-carnival-jj7qx674px473v7r-9000.app.github.dev/collections/GONT13318905.arrondissements/items?limit=5000' // URL pgFeatureServ GeoJSON ! Attention il faut bien inclure la méthode qui fait la requete sans limite d'items de données
     });
 
     // Ajout de la couche des arrondissements à la carte MapLibre
@@ -76,3 +76,19 @@ function loadWFS() {
         'before': 'qt_arbres_quartier' // This ensures that 'arrondissements' is placed beneath 'qt_arbres_quartier'
     });
 }
+
+var nav = new maplibregl.NavigationControl({
+    showCompass: true,
+    showZoom: true,
+    visualizePitch: true
+});
+map.addControl(nav, 'top-right');
+
+var geolocateControl = new maplibregl.GeolocateControl({
+    positionOptions: { enableHighAccuracy: true },
+    trackUserLocation: true
+});
+map.addControl(geolocateControl, 'bottom-right');
+
+var scale = new maplibregl.ScaleControl({ unit: 'metric' });
+map.addControl(scale);
